@@ -29,23 +29,27 @@ The workflow passes through the following steps:
 #. `Clone the fork repository
    <https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository>`_
    to a local computer or HPC server. (typically once per new machine)
-#. After making code changes, push code changes to fork repository.
+#. Add the main repository as a ``remote`` repository source for new
+   work, updates, and comparisons.
+#. Create a new working branch for code changes that begins at the
+   relevant point of a branch in the main repository.
+#. After making code changes, push code changes to the fork repository.
+#. Update your work with changes from the main repository.
 #. Create a pull request to push code changes from fork repository to the main
    repository.
-#. Synchronize local clone (and/or fork repository) with recent changes from the
-   main repository.
 
-Keep local clone in sync with main repository
-'''''''''''''''''''''''''''''''''''''''''''''
+Managing branches in your fork
+''''''''''''''''''''''''''''''
 
-When cloning a GitHub repository, the local clone will refer to the original
-source as ``origin`` and branches in the original source by ``origin/<branch>``,
-(e.g. ``origin/master``). For the fork-based workflow, ``origin`` will refer to
-the personal fork, but it is also useful to be able to sync with the main
+When cloning a GitHub repository, the local clone will refer to the
+original source as ``origin`` (this can be overridden using the ``-o
+<remote-name>`` argument to ``git clone``) and branches in the
+original source by ``origin/<branch>``, (e.g. ``origin/main``). For
+the fork-based workflow, ``origin`` will refer to the personal fork,
+but it is also useful to be able to reference branches in the main
 repository, often referred to as ``upstream`` (we keep to these naming
-conventions hereafter). Connections to remote repositories are managed by ``git
-remote``
-::
+conventions hereafter). Connections to remote repositories are managed
+by ``git remote`` ::
 
   git remote -v    # List all remote repositories
 
@@ -57,10 +61,10 @@ longer term collaboration. To add a reference to ``upstream``
 
   git remote add upstream https://github.com/NorESMhub/NorESM.git
 
-To get the latest version of ``master`` from ``upstream``
+To get the latest version of ``main`` from ``upstream``
 ::
 
-   git pull upstream master
+   git pull upstream main
 
 
 Make code changes
@@ -80,8 +84,8 @@ In a practical session, this can involve running the following commands
 ::
 
    git fetch --all               # Update commit log for all remote git repositories
-   git pull upstream master      # pull latest from the upstream master branch; do it often if possible
-   git push origin master        # do this when upstream is ahead of you local (origin) repos, to stay in sync.
+   git pull upstream main      # pull latest from the upstream main branch; do it often if possible
+   git push origin main        # do this when upstream is ahead of you local (origin) repos, to stay in sync.
    git checkout -b my-feature    # create and switch to a new branch "my-feature".
    ...                           # edit some code
    git commit -a -m "Add first draft of my feature"
@@ -140,7 +144,7 @@ during a test run (stippled arrows in :ref:`Fig. 2<(Fig. 2)>`).
 Removing feature branches after merging
 '''''''''''''''''''''''''''''''''''''''
 
-After a feature branch has been merged with ``master`` in the main repository,
+After a feature branch has been merged with ``main`` in the main repository,
 it is useful to clean up local clones and the GitHub fork repository by removing
 the feature branch. The fork copy can be removed with an option from the pull
 request, after the branch merging has completed, but the clone will still have a
